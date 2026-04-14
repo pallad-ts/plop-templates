@@ -1,0 +1,16 @@
+{
+  "name": "@pallad/plop-templates",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pallad-ts/plop-templates.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pallad-ts/plop-templates/issues"
+  },
+  "homepage": "https://github.com/pallad-ts/plop-templates#readme",
+  "description": ""
+}
