@@ -15,6 +15,11 @@ function createRootConfigurationGenerator({ updatePackageJson }) {
       },
       {
         type: "add",
+        path: ".yarnrc.yml",
+        templateFile: "templates/root-configuration/.yarnrc.yml",
+      },
+      {
+        type: "add",
         path: "vitest.base.config.ts",
         templateFile: "templates/root-configuration/vitest.base.config.ts",
       },
