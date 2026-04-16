@@ -30,8 +30,8 @@ function createPackageGenerator() {
         type: "input",
         name: "packageName",
         message: "Package name",
-        filter: (value) => value.trim(),
-        validate: (value) => {
+        filter: value => value.trim(),
+        validate: value => {
           if (typeof value !== "string" || value.trim() === "") {
             return "Package name is required";
           }
@@ -42,11 +42,7 @@ function createPackageGenerator() {
             return "Package name must use lowercase letters, numbers, and hyphens";
           }
 
-          const packageDir = path.resolve(
-            process.cwd(),
-            "package",
-            packageName,
-          );
+          const packageDir = path.resolve(process.cwd(), "package", packageName);
 
           if (fs.existsSync(packageDir)) {
             return "Target package directory already exists";
@@ -60,8 +56,8 @@ function createPackageGenerator() {
         name: "namespace",
         message: "Namespace (optional, e.g. @pallad/some-namespace)",
         default: "",
-        filter: (value) => (typeof value === "string" ? value.trim() : ""),
-        validate: (value) => {
+        filter: value => (typeof value === "string" ? value.trim() : ""),
+        validate: value => {
           if (typeof value !== "string" || value.trim() === "") {
             return true;
           }
@@ -101,11 +97,7 @@ function createPackageGenerator() {
         template: "",
       },
       function updatePackageScaffold(answers) {
-        const packageDir = path.resolve(
-          process.cwd(),
-          "package",
-          answers.packageName,
-        );
+        const packageDir = path.resolve(process.cwd(), "package", answers.packageName);
         return updatePackageScaffoldPackageJson(packageDir);
       },
     ],

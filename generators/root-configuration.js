@@ -6,8 +6,8 @@ const ROOT_DEV_DEPENDENCIES = {
   "@trivago/prettier-plugin-sort-imports": "^6",
   plop: "^4",
   prettier: "^3",
-  barrelsby: "^2.8.1",
-  typescript: "^5.9.3",
+  barrelsby: "^2",
+  typescript: "^5",
 };
 
 async function updateRootPackageJson() {
