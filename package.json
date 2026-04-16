@@ -12,5 +12,8 @@
     "url": "https://github.com/pallad-ts/plop-templates/issues"
   },
   "homepage": "https://github.com/pallad-ts/plop-templates#readme",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "@npmcli/package-json": "^7"
+  }
 }

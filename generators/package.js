@@ -1,7 +1,28 @@
 const fs = require("fs");
 const path = require("path");
+const PackageJson = require("@npmcli/package-json");
 
-function createPackageGenerator({ updatePackageJson }) {
+const PACKAGE_MANAGER = "yarn@4.11.0";
+const PACKAGE_SCRIPTS = {
+  test: "yarn run -TB vitest run --passWithNoTests",
+  lint: "yarn run -TB eslint src/**/*.ts",
+  "generate-barrels": "yarn run -TB barrelsby -l replace -L --delete -d ./src",
+};
+
+async function updatePackageScaffoldPackageJson(packageDir) {
+  const packageJson = await PackageJson.load(packageDir);
+
+  packageJson.update({
+    packageManager: PACKAGE_MANAGER,
+    scripts: { ...PACKAGE_SCRIPTS },
+  });
+
+  await packageJson.save();
+
+  return "Updated package manager and scripts in package.json";
+}
+
+function createPackageGenerator() {
   return {
     description: "Create package scaffold",
     prompts: [
@@ -21,7 +42,11 @@ function createPackageGenerator({ updatePackageJson }) {
             return "Package name must use lowercase letters, numbers, and hyphens";
           }
 
-          const packageDir = path.resolve(process.cwd(), "package", packageName);
+          const packageDir = path.resolve(
+            process.cwd(),
+            "package",
+            packageName,
+          );
 
           if (fs.existsSync(packageDir)) {
             return "Target package directory already exists";
@@ -76,10 +101,12 @@ function createPackageGenerator({ updatePackageJson }) {
         template: "",
       },
       function updatePackageScaffold(answers) {
-        return updatePackageJson({
-          includeScripts: true,
-          packagePath: path.join("package", answers.packageName),
-        });
+        const packageDir = path.resolve(
+          process.cwd(),
+          "package",
+          answers.packageName,
+        );
+        return updatePackageScaffoldPackageJson(packageDir);
       },
     ],
   };

@@ -1,4 +1,44 @@
-function createRootConfigurationGenerator({ updatePackageJson }) {
+const PackageJson = require("@npmcli/package-json");
+
+const PACKAGE_MANAGER = "yarn@4.11.0";
+const ROOT_DEV_DEPENDENCIES = {
+  "@pallad/plop-templates": "^1",
+  "@trivago/prettier-plugin-sort-imports": "^6",
+  plop: "^4",
+  prettier: "^3",
+  barrelsby: "^2.8.1",
+  typescript: "^5.9.3",
+};
+
+async function updateRootPackageJson() {
+  const packageDir = process.cwd();
+
+  let packageJson;
+
+  try {
+    packageJson = await PackageJson.load(packageDir);
+  } catch (error) {
+    if (error && error.code === "ENOENT") {
+      throw new Error("package.json not found in target package directory");
+    }
+
+    throw error;
+  }
+
+  packageJson.update({
+    packageManager: PACKAGE_MANAGER,
+    devDependencies: {
+      ...(packageJson.content.devDependencies || {}),
+      ...ROOT_DEV_DEPENDENCIES,
+    },
+  });
+
+  await packageJson.save();
+
+  return "Updated package manager and devDependencies in package.json";
+}
+
+function createRootConfigurationGenerator() {
   return {
     description: "Copy root-level tooling configuration files",
     prompts: [],
@@ -33,8 +73,8 @@ function createRootConfigurationGenerator({ updatePackageJson }) {
         path: "eslint.config.js",
         templateFile: "templates/root-configuration/eslint.config.js",
       },
-      function updatePackageManager() {
-        return updatePackageJson();
+      function updatePackageManagerAndDependencies() {
+        return updateRootPackageJson();
       },
     ],
   };
