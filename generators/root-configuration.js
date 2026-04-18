@@ -8,7 +8,7 @@ const ROOT_DEV_DEPENDENCIES = {
 	prettier: "^3",
 	barrelsby: "^2",
 	typescript: "^5",
-	eslint: "^10",
+	eslint: "^9",
 	'@pallad/eslint-config': "^2",
 	"@types/node": "^24",
 	"vitest": "^4.1.4"
