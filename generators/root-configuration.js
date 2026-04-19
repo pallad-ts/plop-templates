@@ -51,31 +51,37 @@ function createRootConfigurationGenerator() {
 				type: "add",
 				path: ".editorconfig",
 				templateFile: "templates/root-configuration/.editorconfig",
+				skipIfExists: true,
 			},
 			{
 				type: "add",
 				path: ".prettierrc.js",
 				templateFile: "templates/root-configuration/.prettierrc.js",
+				skipIfExists: true,
 			},
 			{
 				type: "add",
 				path: ".yarnrc.yml",
 				templateFile: "templates/root-configuration/.yarnrc.yml",
+				skipIfExists: true,
 			},
 			{
 				type: "add",
 				path: "vitest.base.config.ts",
 				templateFile: "templates/root-configuration/vitest.base.config.ts",
+				skipIfExists: true,
 			},
 			{
 				type: "add",
-				path: "tsconfig.json",
-				templateFile: "templates/root-configuration/tsconfig.json",
+				path: "tsconfig.base.json",
+				templateFile: "templates/root-configuration/tsconfig.base.json",
+				skipIfExists: true,
 			},
 			{
 				type: "add",
 				path: "eslint.config.js",
 				templateFile: "templates/root-configuration/eslint.config.js",
+				skipIfExists: true,
 			},
 			function updatePackageManagerAndDependencies() {
 				return updateRootPackageJson();

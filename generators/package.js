@@ -1,4 +1,3 @@
-const fs = require("fs");
 const path = require("path");
 const PackageJson = require("@npmcli/package-json");
 
@@ -42,12 +41,6 @@ function createPackageGenerator() {
             return "Package name must use lowercase letters, numbers, and hyphens";
           }
 
-          const packageDir = path.resolve(process.cwd(), "package", packageName);
-
-          if (fs.existsSync(packageDir)) {
-            return "Target package directory already exists";
-          }
-
           return true;
         },
       },
@@ -75,26 +68,31 @@ function createPackageGenerator() {
         type: "add",
         path: "package/{{packageName}}/package.json",
         templateFile: "templates/package/package.json.hbs",
+        skipIfExists: true,
       },
       {
         type: "add",
         path: "package/{{packageName}}/eslint.config.js",
         templateFile: "templates/package/eslint.config.js",
+        skipIfExists: true,
       },
       {
         type: "add",
         path: "package/{{packageName}}/tsconfig.json",
         templateFile: "templates/package/tsconfig.json",
+        skipIfExists: true,
       },
       {
         type: "add",
         path: "package/{{packageName}}/vitest.config.js",
         templateFile: "templates/package/vitest.config.js",
+        skipIfExists: true,
       },
       {
         type: "add",
         path: "package/{{packageName}}/src/index.ts",
         template: "",
+        skipIfExists: true,
       },
       function updatePackageScaffold(answers) {
         const packageDir = path.resolve(process.cwd(), "package", answers.packageName);

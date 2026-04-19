@@ -1,10 +1,4 @@
 {
   "name": "{{#if namespace}}{{namespace}}-{{packageName}}{{else}}@lib/{{packageName}}{{/if}}",
   "version": "0.0.0",
-  "private": true,
-  "scripts": {
-    "test": "yarn run -TB vitest run --passWithNoTests",
-    "lint": "yarn run -TB eslint src/**/*.ts",
-    "generate-barrels": "yarn run -TB barrelsby -l replace -L --delete -d ./src"
-  }
 }
