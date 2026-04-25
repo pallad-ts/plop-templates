@@ -4,8 +4,11 @@
     "rootDir": "src",
     "composite": true,
     "outDir": "dist",
-    "types": ["vitest/globals"]
+    "types": [
+      "vitest/globals"
+    ]
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "__tests__/**"]
+  "include": [
+    "src/**/*"
+  ]
 }
