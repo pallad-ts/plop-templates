@@ -5,9 +5,12 @@ const PACKAGE_MANAGER = "yarn@4.11.0";
 const PACKAGE_SCRIPTS = {
 	test: "yarn run -TB vitest run --passWithNoTests",
 	lint: "yarn run -TB eslint src/**/*.ts",
+	"build:clean": "yarn run -TB tsc --build --clean tsconfig.build.json",
+	entrysmith: "yarn run generate-barrels && yarn run -TB entrysmith fix",
+	prepare: "yarn run entrysmith",
+	prepublish: "yarn run compile",
+	compile: "yarn run entrysmith && yarn run build:clean && yarn run -TB tsc --build tsconfig.build.json",
 	"generate-barrels": "yarn run -TB barrelsby -l replace -L --delete -d ./src",
-	compile:
-		"yarn run generate-barrels && yarn run -TB tsc --build --clean tsconfig.build.json && yarn run -TB tsc --build tsconfig.build.json",
 };
 
 async function updatePackageScaffoldPackageJson(packageDir) {
@@ -94,6 +97,12 @@ function createPackageGenerator() {
 				type: "add",
 				path: "package/{{packageName}}/vitest.config.js",
 				templateFile: "templates/package/vitest.config.js",
+				skipIfExists: true,
+			},
+			{
+				type: "add",
+				path: "package/{{packageName}}/entrysmith.config.js",
+				templateFile: "templates/package/entrysmith.config.js",
 				skipIfExists: true,
 			},
 			{
